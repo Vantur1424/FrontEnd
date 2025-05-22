@@ -1,0 +1,128 @@
+import 'package:coffeeshope/home.dart';
+import 'package:coffeeshope/menu_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
+
+class DetailPage4 extends StatefulWidget {
+  const DetailPage4({super.key});
+
+  @override
+  State<DetailPage4> createState() => _DetailPage4State();
+}
+
+class _DetailPage4State extends State<DetailPage4> {
+  @override
+  Widget build(BuildContext context) {
+    final prov = Provider.of<Menu_Provider>(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Es Americano"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.only(top: 5),
+        child: ListView(children: [
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              prov.menu['data'][3]['nama'],
+              style: TextStyle(fontSize: 40),
+            ),
+          ),
+          Row(
+            children: [
+              Column(
+                children: [
+                  RatingBarIndicator(
+                    rating:
+                        double.parse(prov.menu['data'][1]['rating'].toString()),
+                    itemBuilder: (context, index) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    itemCount: 5,
+                    itemSize: 24.0,
+                    direction: Axis.horizontal,
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Text(
+                    "[" + prov.menu['data'][3]['rating'].toString() + "]",
+                  )
+                ],
+              )
+            ],
+          ),
+          Row(
+            children: [Image.asset(prov.menu['data'][3]['img'])],
+          ),
+          Row(
+            children: [
+              Column(
+                children: [Text("\$")],
+              ),
+              Column(
+                children: [
+                  Text(
+                    prov.menu['data'][3]['harga'].toString(),
+                  )
+                ],
+              )
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 50, left: 10),
+            child: Text("Sized", style: TextStyle(fontSize: 20)),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Text(prov.menu['data'][3]["ukuran"],
+                style: TextStyle(fontSize: 50)),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10, left: 10),
+            child: Text(prov.menu['data'][3]['nama'],
+                style: TextStyle(fontSize: 10)),
+          ),
+          Padding(
+              padding: const EdgeInsets.only(top: 10, left: 10),
+              child: Text(
+                prov.menu['data'][3]['deskripsi'],
+              )),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: TextButton.icon(
+                  onPressed: () {
+                    {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MyHome()));
+                    }
+                  },
+                  icon: Icon(
+                    Icons.shopping_cart,
+                    color: Colors.black,
+                  ),
+                  label: Text("Add To Cart",
+                      style: TextStyle(color: Colors.black)),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.brown),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)))),
+                ),
+              )
+            ],
+          )
+        ]),
+      ),
+    );
+  }
+}
